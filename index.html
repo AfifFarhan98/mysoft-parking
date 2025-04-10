@@ -1,0 +1,89 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>LIFO Parking Lot</title>
+    <style>
+        .car {
+            display: inline-block;
+            padding: 10px 20px;
+            margin: 10px;
+            background: #4CAF50;
+            color: white;
+            cursor: pointer;
+            border-radius: 8px;
+        }
+
+        .parking {
+            margin-top: 30px;
+            padding: 20px;
+            border: 2px dashed gray;
+            min-height: 100px;
+            cursor: pointer;
+            background-color: #f9f9f9;
+        }
+
+        .car-slot {
+            margin: 5px 0;
+        }
+    </style>
+</head>
+<body>
+
+<h2>LIFO Parking Lot</h2>
+
+<!-- Car Buttons -->
+<div>
+    <div class="car" onclick="addCar('A')">Car A</div>
+    <div class="car" onclick="addCar('B')">Car B</div>
+    <div class="car" onclick="addCar('C')">Car C</div>
+</div>
+
+<!-- Parking Area -->
+<div class="parking" onclick="removeCar()">
+    <strong>Parking Lot (Top = Last In):</strong>
+    <div id="parkingArea"></div>
+    <p><em>Click here to remove the last car (LIFO)</em></p>
+</div>
+
+<script>
+    const stack = [];
+    const parkingArea = document.getElementById("parkingArea");
+
+    function renderParking() {
+        parkingArea.innerHTML = "";
+        if (stack.length === 0) {
+            parkingArea.innerHTML = "<p>Empty</p>";
+            return;
+        }
+        for (let i = stack.length - 1; i >= 0; i--) {
+            const carDiv = document.createElement("div");
+            carDiv.className = "car-slot";
+            carDiv.textContent = "Car " + stack[i];
+            parkingArea.appendChild(carDiv);
+        }
+    }
+
+    function addCar(car) {
+        if (!stack.includes(car)) {
+            stack.push(car);
+            renderParking();
+        } else {
+            alert("Car " + car + " is already parked!");
+        }
+    }
+
+    function removeCar() {
+        if (stack.length > 0) {
+            const removed = stack.pop();
+            alert("Car " + removed + " has left the parking.");
+            renderParking();
+        }
+    }
+
+    // Initial render
+    renderParking();
+</script>
+
+</body>
+</html>
