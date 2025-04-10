@@ -1,49 +1,91 @@
-
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>LIFO Parking Lot</title>
+    <meta charset="UTF-8">
+    <title>Mysoft Parking</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <style>
-        .car {
-            display: inline-block;
-            padding: 10px 20px;
-            margin: 10px;
-            background: #4CAF50;
+        body {
+            font-family: sans-serif;
+            margin: 20px;
+            background-color: #f4f4f4;
+        }
+
+        h2 {
+            text-align: center;
+        }
+
+        .car-buttons {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .car-btn {
+            padding: 12px 20px;
+            background-color: #4CAF50;
             color: white;
+            border: none;
+            width: 80%;
+            max-width: 300px;
+            font-size: 18px;
+            border-radius: 10px;
             cursor: pointer;
-            border-radius: 8px;
+        }
+
+        .car-btn:hover {
+            background-color: #45a049;
         }
 
         .parking {
             margin-top: 30px;
             padding: 20px;
-            border: 2px dashed gray;
-            min-height: 100px;
+            border: 2px dashed #888;
+            border-radius: 10px;
+            background-color: white;
+            text-align: center;
             cursor: pointer;
-            background-color: #f9f9f9;
         }
 
-        .car-slot {
+        .parking-slot {
             margin: 5px 0;
+            font-size: 18px;
+        }
+
+        .note {
+            font-size: 14px;
+            color: #777;
+        }
+
+        @media (min-width: 600px) {
+            .car-buttons {
+                flex-direction: row;
+                justify-content: center;
+            }
+
+            .car-btn {
+                width: auto;
+            }
         }
     </style>
 </head>
 <body>
 
-<h2>LIFO Parking Lot</h2>
+<h2>Mysoft Parking</h2>
 
 <!-- Car Buttons -->
-<div>
-    <div class="car" onclick="addCar('A')">Car A</div>
-    <div class="car" onclick="addCar('B')">Car B</div>
-    <div class="car" onclick="addCar('C')">Car C</div>
+<div class="car-buttons">
+    <button class="car-btn" onclick="addCar('A')">Car Ah Meng</button>
+    <button class="car-btn" onclick="addCar('B')">Car JJ</button>
+    <button class="car-btn" onclick="addCar('C')">Car Farhan</button>
 </div>
 
 <!-- Parking Area -->
 <div class="parking" onclick="removeCar()">
     <strong>Parking Lot (Top = Last In):</strong>
     <div id="parkingArea"></div>
-    <p><em>Click here to remove the last car (LIFO)</em></p>
+    <div class="note">Tap to remove last parked car (LIFO)</div>
 </div>
 
 <script>
@@ -53,12 +95,13 @@
     function renderParking() {
         parkingArea.innerHTML = "";
         if (stack.length === 0) {
-            parkingArea.innerHTML = "<p>Empty</p>";
+            parkingArea.innerHTML = "<div class='parking-slot'>Empty</div>";
             return;
         }
+
         for (let i = stack.length - 1; i >= 0; i--) {
             const carDiv = document.createElement("div");
-            carDiv.className = "car-slot";
+            carDiv.className = "parking-slot";
             carDiv.textContent = "Car " + stack[i];
             parkingArea.appendChild(carDiv);
         }
@@ -81,8 +124,7 @@
         }
     }
 
-    // Initial render
-    renderParking();
+    renderParking(); // Initial render
 </script>
 
 </body>
